@@ -10,20 +10,8 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Authentication middleware
-const authenticateToken = (req, res, next) => {
-    const token = req.headers['authorization'];
-    if (!token) return res.status(401).json({ error: 'Access denied' });
-
-    jwt.verify(token, 'your_jwt_secret', (err, user) => {
-        if (err) return res.status(403).json({ error: 'Invalid token' });
-        req.user = user;
-        next();
-    });
-};
-
 // MongoDB connection
-mongoose.connect('mongodb+srv://brodybeckettgray:modymay7@cluster0.nxzqy.mongodb.net/yourdb?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://brodybeckettgray:modymay7@cluster0.nxzqy.mongodb.net/yourdb?retryWrites=true&w=majority&appName=Cluster0')
     .then(() => console.log('Connected to MongoDB Atlas'))
     .catch(err => console.error('Could not connect to MongoDB:', err));
 
@@ -47,16 +35,6 @@ const UserSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model('User', UserSchema);
-
-// Routes
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Protected route example
-app.get('/api/protected', authenticateToken, (req, res) => {
-    res.json({ message: 'This is a protected route', user: req.user });
-});
 
 // Registration endpoint
 app.post('/api/register', async (req, res) => {
@@ -116,7 +94,7 @@ app.post('/api/login', async (req, res) => {
         // Create JWT token
         const token = jwt.sign(
             { userId: user._id },
-            'your_jwt_secret',
+            process.env.JWT_SECRET || 'your_jwt_secret',
             { expiresIn: '24h' }
         );
 
@@ -133,8 +111,18 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-// Start server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+// Serve all routes through index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
+// For Vercel, we need to export the app
+module.exports = app;
+
+// Only listen if not being served by Vercel
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
