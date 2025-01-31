@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Website</title>
+    <link rel="stylesheet" href="/public/css/cursor.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/nav.css">
+    <style>
+       /* Base Styles */
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none;
+}
+
+body {
+    font-family: abc;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Font Faces */
+@font-face {
+    font-family: abc;
+    src: url(/fonts/ABCDiatypeVariable-Trial.ttf);
+}
+
+@font-face {
+    font-family: abcmono;
+    src: url(/fonts/ABCDiatypeMonoVariable-Trial.ttf);
+}
+
+/* Cursor Styles */
+#custom-cursor {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #000;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform-origin: center;
+    transition: all .4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#custom-cursor.hover {
+    width: 7px;
+    height: 7px;
+    border: none;
+    background-color: #0000ff;
+    transform: translate(5px, 5px);
+}
+
+/* Canvas */
+canvas {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Stats Section Styles */
+.stats-section {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    position: relative;
+    margin-top: 3rem ;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+    max-width: 1400px;
+    width: 100%;
+}
+
+.stat-card-container {
+    position: relative;
+}
+
+.stat-card {
+    aspect-ratio: 2/1.2;
+    border: 1px solid #000;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    background: white;
+    position: relative;
+}
+
+.stat-number {
+    font-family: abcmono;
+    font-size: 3.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.stat-label {
+    position: absolute;
+    top: -25px;
+    left: 20px;
+    background: white;
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    border: 1px solid #000;
+    z-index: 1;
+}
+
+/* Pricing Section Styles */
+.pricing-section {
+    margin-top: 80px;
+    padding: 64px;
+    background: white;
+    position: relative;
+    border-top: 2px solid black;
+}
+
+.pricing-header {
+    margin-bottom: 64px;
+    max-width: 600px;
+}
+
+.pricing-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    font-weight: normal;
+    font-family: 'abc', sans-serif;
+}
+
+.pricing-description {
+    font-size: 1rem;
+    color: #666;
+    font-family: abcmono;
+    margin-bottom: 2rem;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.pricing-grid a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.pricing-card {
+    aspect-ratio: 1;
+    border: 1px solid #000;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    background: white;
+    text-decoration: none;
+    color: black;
+}
+
+.pricing-card:hover {
+    background: #000;
+    color: #fff;
+}
+
+.pricing-card-title {
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+    font-family: abc;
+}
+
+.pricing-card-price {
+    font-size: 2.5rem;
+    margin-bottom: 24px;
+    font-weight: 500;
+    font-family: abcmono;
+}
+
+.pricing-card-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: abcmono;
+    font-size: 0.9rem;
+}
+
+.pricing-card-features li {
+    margin-bottom: 8px;
+    font-family: abcmono;
+}
+
+/* Carousel Styles */
+.pricing-carousel {
+    display: none;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.carousel-container {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+    width: 100%;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    padding: 0 1rem;
+}
+
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    cursor: none;
+}
+
+.carousel-dot.active {
+    background: #0000ff;
+    border-color: #0000ff;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    border: 1px solid #000;
+    background: white;
+    cursor: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-button::after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    background: #0000ff;
+}
+
+.carousel-prev {
+    left: 1rem;
+}
+
+.carousel-next {
+    right: 1rem;
+}
+
+/* Capabilities Section Styles */
+.capabilities-section {
+    padding: 64px;
+    background: white;
+    position: relative;
+    border-top: 2px solid black;
+}
+
+.capabilities-header {
+    margin-bottom: 64px;
+    max-width: 600px;
+}
+
+.capabilities-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    font-weight: normal;
+    font-family: 'abc', sans-serif;
+}
+
+.capabilities-description {
+    font-size: 1rem;
+    color: #666;
+    font-family: abcmono;
+    margin-bottom: 2rem;
+}
+
+.capabilities-container {
+    max-width: 1200px;
+    margin: 0;
+}
+
+.capability-category {
+    margin-bottom: 4rem;
+}
+
+.category-title {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #000;
+    padding-bottom: 0.5rem;
+    font-weight: normal;
+}
+
+.capability-items {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.capability-item {
+    position: relative;
+}
+
+.item-title {
+    display: inline-block;
+    border: 1px solid #000;
+    padding: 4px 16px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-family: abcmono;
+}
+
+.capability-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.capability-item ul li {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #666;
+    font-family: abcmono;
+}
+
+/* FAQ Section Styles */
+.faq-section {
+    padding: 64px;
+    background: white;
+    position: relative;
+    border-top: 2px solid black;
+}
+
+.faq-header {
+    margin-bottom: 64px;
+    max-width: 600px;
+}
+
+.faq-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    font-weight: normal;
+    font-family: 'abc', sans-serif;
+}
+
+.faq-description {
+    font-size: 1rem;
+    color: #666;
+    font-family: abcmono;
+    margin-bottom: 2rem;
+}
+
+.faq-container {
+    max-width: 800px;
+    width: 100%;
+}
+
+.faq-item {
+    margin-bottom: 16px;
+    border: 1px solid #000;
+    background: white;
+    font-family: abc;
+}
+
+.faq-question {
+    padding: 10px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: abc;
+}
+
+.faq-icon {
+    font-size: 24px;
+    transition: transform 0.3s ease;
+    border: 1px solid #000;
+    width: 10px;
+    height: 10PX;
+}
+
+.faq-answer {
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    font-family: abcmono;
+    color: #666;
+}
+
+.faq-item.active .faq-answer {
+    padding: 0 20px 20px;
+    max-height: 300px;
+}
+
+.faq-item.active .faq-icon {
+    transform: rotate(45deg);
+    border: 1px solid blue;
+}
+
+.faq-item:hover {
+    background: #f9f9f9;
+}
+
+/* Media Queries */
+@media (max-width: 968px) {
+    .stats-section {
+        min-height: auto;
+        padding: 4rem 1rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        max-width: 100%;
+    }
+
+    .stat-card {
+        aspect-ratio: auto;
+        padding: 1.5rem;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+    }
+
+    .pricing-grid {
+        display: none;
+    }
+
+    .pricing-carousel {
+        display: block;
+        position: relative;
+        width: 100%;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .carousel-slide {
+        flex: 0 0 100%;
+        padding: 0;
+    }
+
+    .pricing-card {
+        margin: 0 auto;
+        max-width: 90%;
+        min-height: 400px;
+    }
+
+    .capabilities-section,
+    .faq-section,
+    .pricing-section {
+        padding: 32px 16px;
+    }
+
+    .pricing-section {
+        margin-top: 40px;
+    }
+
+    .faq-container {
+        max-width: 100%;
+    }
+
+    .faq-question {
+        padding: 15px;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .pricing-title,
+    .capabilities-title,
+    .faq-title {
+        font-size: 1.5rem;
+    }
+
+    .pricing-description,
+    .capabilities-description,
+    .faq-description {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .pricing-card {
+        aspect-ratio: auto;
+        min-height: 400px;
+        padding: 24px;
+    }
+
+    .pricing-card-title {
+        font-size: 1.5rem;
+    }
+
+    .pricing-card-price {
+        font-size: 2rem;
+        margin-bottom: 16px;
+    }
+
+    .pricing-card-features {
+        font-size: 0.85rem;
+    }
+
+    .stat-label {
+        font-size: 0.8rem;
+        padding: 4px 12px;
+        top: -20px;
+    }
+
+    .capability-item ul li {
+        font-size: 0.9rem;
+    }
+
+    .item-title {
+        font-size: 0.9rem;
+        padding: 3px 12px;
+    }
+    
+    .faq-question {
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+
+    .faq-answer {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+
+    .faq-icon {
+        width: 8px;
+        height: 8px;
+        margin-right: 5px;
+    }
+
+    /* Additional Mobile Spacing */
+    .pricing-section,
+    .capabilities-section,
+    .faq-section {
+        padding: 40px 16px;
+    }
+
+    .stats-section {
+        padding: 32px 16px;
+    }
+
+    .stats-grid {
+        gap: 2rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    <div id="nav-placeholder"></div>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card-container">
+                <div class="stat-card">
+                    <div class="stat-number" id="websites-count">000</div>
+                </div>
+                <div class="stat-label">Websites Created</div>
+            </div>
+            
+            <div class="stat-card-container">
+                <div class="stat-card">
+                    <div class="stat-number" id="clients-count">000</div>
+                </div>
+                <div class="stat-label">Happy Clients</div>
+            </div>
+            
+            <div class="stat-card-container">
+                <div class="stat-card">
+                    <div class="stat-number" id="current-time">00:00:00</div>
+                </div>
+                <div class="stat-label">Eastern Time</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section">
+        <div class="pricing-header">
+            <h2 class="pricing-title">Uncompromising Quality</h2>
+            <p class="pricing-description">Unlike other agencies, we never compromise on quality. Each website receives the same attention to detail and craftsmanship – the only difference is the scale.</p>
+        </div>
+        <div class="pricing-grid">
+            <a href="makeyoursite.html"> <div class="pricing-card" data-date="3">
+                <div>
+                    <h3 class="pricing-card-title">Portfolio</h3>
+                    <div class="pricing-card-price">$100</div>
+                </div>
+                <ul class="pricing-card-features">
+                    <li>5-page responsive website</li>
+                    <li>Basic SEO optimization</li>
+                    <li>Contact form integration</li>
+                    <li>Mobile-friendly design</li>
+                    <li>2 rounds of revisions</li>
+                    <li>Delivery: 3 days</li>
+                </ul>
+            </div>
+        </a>
+            
+        <a href="makeyoursite.html"><div class="pricing-card" data-date="7">
+                <div>
+                    <h3 class="pricing-card-title">Business</h3>
+                    <div class="pricing-card-price">$400</div>
+                </div>
+                <ul class="pricing-card-features">
+                    <li>10-page responsive website</li>
+                    <li>Advanced SEO optimization</li>
+                    <li>Custom contact forms</li>
+                    <li>Interactive elements</li>
+                    <li>Custom animations</li>
+                    <li>4 rounds of revisions</li>
+                    <li>Delivery: 1 week</li>
+                </ul>
+            </div>
+            </a>
+            
+            <a href="makeyoursite.html"><div class="pricing-card" data-date="30">
+                <div>
+                    <h3 class="pricing-card-title">Enterprise</h3>
+                    <div class="pricing-card-price">Custom</div>
+                </div>
+                <ul class="pricing-card-features">
+                    <li>Unlimited pages</li>
+                    <li>Full SEO strategy</li>
+                    <li>Custom functionality</li>
+                    <li>E-commerce integration</li>
+                    <li>Advanced animations</li>
+                    <li>Unlimited revisions</li>
+                    <li>Timeline: Custom</li>
+                </ul>
+            </div>
+        </div>
+        </a>
+
+        <!-- Inside your pricing-section, after the pricing-grid div -->
+<div class="pricing-carousel">
+    <button class="carousel-button carousel-prev"></button>
+    <button class="carousel-button carousel-next"></button>
+    
+    <div class="carousel-container">
+        <div class="carousel-slide">
+            <a href="makeyoursite.html">
+                <div class="pricing-card" data-date="3">
+                    <div>
+                        <h3 class="pricing-card-title">Portfolio</h3>
+                        <div class="pricing-card-price">$100</div>
+                    </div>
+                    <ul class="pricing-card-features">
+                        <li>5-page responsive website</li>
+                        <li>Basic SEO optimization</li>
+                        <li>Contact form integration</li>
+                        <li>Mobile-friendly design</li>
+                        <li>2 rounds of revisions</li>
+                        <li>Delivery: 3 days</li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+
+        <div class="carousel-slide">
+            <a href="makeyoursite.html">
+                <div class="pricing-card" data-date="7">
+                    <div>
+                        <h3 class="pricing-card-title">Business</h3>
+                        <div class="pricing-card-price">$400</div>
+                    </div>
+                    <ul class="pricing-card-features">
+                        <li>10-page responsive website</li>
+                        <li>Advanced SEO optimization</li>
+                        <li>Custom contact forms</li>
+                        <li>Interactive elements</li>
+                        <li>Custom animations</li>
+                        <li>4 rounds of revisions</li>
+                        <li>Delivery: 1 week</li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+
+        <div class="carousel-slide">
+            <a href="makeyoursite.html">
+                <div class="pricing-card" data-date="30">
+                    <div>
+                        <h3 class="pricing-card-title">Enterprise</h3>
+                        <div class="pricing-card-price">Custom</div>
+                    </div>
+                    <ul class="pricing-card-features">
+                        <li>Unlimited pages</li>
+                        <li>Full SEO strategy</li>
+                        <li>Custom functionality</li>
+                        <li>E-commerce integration</li>
+                        <li>Advanced animations</li>
+                        <li>Unlimited revisions</li>
+                        <li>Timeline: Custom</li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="carousel-indicators">
+        <div class="carousel-dot active"></div>
+        <div class="carousel-dot"></div>
+        <div class="carousel-dot"></div>
+    </div>
+</div>
+    </section>
+
+
+    <section class="capabilities-section">
+        <div class="capabilities-header">
+            <h2 class="capabilities-title">Our Capabilities</h2>
+            <p class="capabilities-description">Transforming ideas into exceptional digital experiences. Here's what we bring to the table.</p>
+        </div>
+        
+        <div class="capabilities-container">
+            <div class="capabilities-main">
+                <div class="capability-category">
+                    <h3 class="category-title">Development</h3>
+                    <div class="capability-items">
+                        <div class="capability-item">
+                            <span class="item-title">Frontend</span>
+                            <ul>
+                                <li>React & Next.js</li>
+                                <li>Custom Animations</li>
+                                <li>Performance</li>
+                            </ul>
+                        </div>
+                        <div class="capability-item">
+                            <span class="item-title">Backend</span>
+                            <ul>
+                                <li>API Development</li>
+                                <li>Database Design</li>
+                                <li>Cloud Services</li>
+                            </ul>
+                        </div>
+                        <div class="capability-item">
+                            <span class="item-title">Infrastructure</span>
+                            <ul>
+                                <li>AWS & Vercel</li>
+                                <li>CI/CD Pipeline</li>
+                                <li>Security</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="capability-category">
+                    <h3 class="category-title">Design</h3>
+                    <div class="capability-items">
+                        <div class="capability-item">
+                            <span class="item-title">User Experience</span>
+                            <ul>
+                                <li>Information Architecture</li>
+                                <li>User Flows</li>
+                                <li>Prototyping</li>
+                            </ul>
+                        </div>
+                        <div class="capability-item">
+                            <span class="item-title">Visual Design</span>
+                            <ul>
+                                <li>UI Design</li>
+                                <li>Design Systems</li>
+                                <li>Brand Identity</li>
+                            </ul>
+                        </div>
+                        <div class="capability-item">
+                            <span class="item-title">Interaction</span>
+                            <ul>
+                                <li>Motion Design</li>
+                                <li>Micro-interactions</li>
+                                <li>Responsive Design</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="faq-section">
+        <div class="faq-header">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            <p class="faq-description">Get answers to common questions about our services and process.</p>
+        </div>
+        
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How long does it typically take to complete a website?</span>
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    Our timeline varies based on the project scope. Portfolio websites can be completed in 3 days, business websites in 1 week, and enterprise solutions have custom timelines based on requirements. We'll provide a detailed timeline during our initial consultation.
+                </div>
+            </div>
+    
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What is your revision policy?</span>
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    We offer different revision rounds based on your package - 2 rounds for Portfolio, 4 rounds for Business, and unlimited revisions for Enterprise clients. Additional revision rounds can be purchased if needed.
+                </div>
+            </div>
+    
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Do you provide hosting and maintenance?</span>
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    Yes, we provide hosting through reliable providers like AWS and Vercel. We also offer ongoing maintenance packages to keep your website secure, updated, and performing optimally.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Do you use wordpress?</span>
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    No, we do not use wordpress. We build custom websites from scratch to ensure optimal performance, security, and scalability. Our websites are tailored to your specific needs and are not limited by the constraints of a CMS.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What technologies do you use?</span>
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    We primarily use HTML, CSS and javascript for frontend development, coupled with modern backend technologies. Our tech stack is chosen based on performance, scalability, and maintenance considerations specific to your project needs.
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+    <script src="/public/js/cursor.js"></script>
+<script src="/public/js/nav.js"></script>
+<script src="/public/js/footer.js"></script>
+    
+    <script>
+        // Add this to your existing script section
+class PricingCarousel {
+    constructor() {
+        this.currentSlide = 0;
+        this.slides = document.querySelectorAll('.carousel-slide');
+        this.dots = document.querySelectorAll('.carousel-dot');
+        this.prevButton = document.querySelector('.carousel-prev');
+        this.nextButton = document.querySelector('.carousel-next');
+        
+        this.init();
+    }
+
+    init() {
+        this.updateSlides();
+        this.updateDots();
+        
+        this.prevButton.addEventListener('click', () => this.prev());
+        this.nextButton.addEventListener('click', () => this.next());
+        
+        this.dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => this.goToSlide(index));
+        });
+    }
+
+    updateSlides() {
+        const container = document.querySelector('.carousel-container');
+        container.style.transform = `translateX(-${this.currentSlide * 100}%)`;
+    }
+
+    updateDots() {
+        this.dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === this.currentSlide);
+        });
+    }
+
+    next() {
+        this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+        this.updateSlides();
+        this.updateDots();
+    }
+
+    prev() {
+        this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+        this.updateSlides();
+        this.updateDots();
+    }
+
+    goToSlide(index) {
+        this.currentSlide = index;
+        this.updateSlides();
+        this.updateDots();
+    }
+}
+
+// Initialize carousel
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.innerWidth <= 968) {
+        new PricingCarousel();
+    }
+});
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentNode;
+                const isActive = item.classList.contains('active');
+                
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(faqItem => {
+                    faqItem.classList.remove('active');
+                });
+                
+                // If the clicked item wasn't active, open it
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+        // Stats Counter Animation
+        function generateRandomNumber(length) {
+            return String(Math.floor(Math.random() * Math.pow(10, length))).padStart(length, '0');
+        }
+
+        function animateCounter(element, finalNumber, duration = 1000) {
+            const steps = 20;
+            const increment = duration / steps;
+            let currentStep = 0;
+            const finalLength = String(finalNumber).length;
+
+            const interval = setInterval(() => {
+                currentStep++;
+                if (currentStep === steps) {
+                    element.textContent = String(finalNumber).padStart(finalLength, '0');
+                    clearInterval(interval);
+                } else {
+                    element.textContent = generateRandomNumber(finalLength);
+                }
+            }, increment);
+        }
+
+        function updateTime() {
+            const timeElement = document.getElementById('current-time');
+            const now = new Date();
+            const options = {
+                timeZone: 'America/New_York',
+                hour12: true,
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric'
+            };
+            timeElement.textContent = now.toLocaleTimeString('en-US', options);
+        }
+
+        // Intersection Observer for animation trigger
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Start counter animations
+                    animateCounter(document.getElementById('websites-count'), 5);
+                    animateCounter(document.getElementById('clients-count'), 5);
+                    observer.disconnect();
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observe the stats section
+        observer.observe(document.querySelector('.stats-section'));
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial time update
+
+        // Footer JS
+        document.addEventListener('DOMContentLoaded', function() {
+            const bottomContainer = document.querySelector('.bottom-container');
+            const arrowContainer = document.querySelector('.arrow-container');
+
+            if (bottomContainer && arrowContainer) {
+                bottomContainer.style.display = 'block';
+                arrowContainer.addEventListener('click', function() {
+                    bottomContainer.classList.toggle('visible');
+                    this.classList.toggle('up');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

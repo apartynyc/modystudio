@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="/public/css/cursor.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/nav.css">
+    <style>
+       @font-face {
+            font-family: abc;
+            src: url(/public/fonts/ABCDiatypeVariable-Trial.ttf);
+        }
+        @font-face {
+            font-family: abcmono;
+            src: url(/public/fonts/ABCDiatypeMonoVariable-Trial.ttf);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        body {
+            font-family: 'abc', sans-serif;
+            background: white;
+        }
+
+        .about-section {
+            padding: 120px 64px 64px 64px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-header {
+            margin-bottom: 64px;
+        }
+
+        .about-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            font-weight: normal;
+            font-family: 'abc', sans-serif;
+        }
+
+        .about-description {
+            font-size: 1.1rem;
+            color: #666;
+            font-family: abcmono;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            margin-bottom: 80px;
+        }
+
+        .content-block {
+            border: 1px solid #000;
+            padding: 32px;
+            background: white;
+        }
+
+        .block-title {
+            font-family: abc;
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+        }
+
+        .block-text {
+            font-family: abcmono;
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .values-section {
+            margin-bottom: 80px;
+        }
+
+        .values-title {
+            font-size: 1.4rem;
+            margin-bottom: 32px;
+            font-family: abc;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .value-card {
+            border: 1px solid #000;
+            padding: 24px;
+        }
+
+        .value-number {
+            font-family: abcmono;
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .value-title {
+            font-family: abc;
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+        }
+
+        .value-description {
+            font-family: abcmono;
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .team-section {
+            margin-top: 80px;
+            padding-top: 80px;
+            border-top: 1px solid #000;
+        }
+
+        .team-title {
+            font-size: 1.4rem;
+            margin-bottom: 32px;
+            font-family: abc;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .team-member {
+            border: 1px solid #000;
+            padding: 24px;
+        }
+
+        .member-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background: #f5f5f5;
+            margin-bottom: 16px;
+        }
+
+        .member-name {
+            font-family: abc;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .member-role {
+            font-family: abcmono;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 968px) {
+            .about-section {
+                padding: 100px 32px 32px 32px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .values-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    <div id="nav-placeholder"></div>
+
+    <section class="about-section">
+        <div class="about-header">
+            <h2 class="about-title">About Us</h2>
+            <p class="about-description">We're a digital studio born from a simple observation: quality websites shouldn't be out of reach. By combining design excellence with technical efficiency, we're making professional web design both accessible and affordable.</p>
+        </div>
+        
+        <div class="content-grid">
+            <div class="content-block">
+                <h3 class="block-title">Our Story</h3>
+                <p class="block-text">We started with a clear mission: to challenge the notion that great websites have to be expensive or take months to build. Through streamlined processes and modern technology, we deliver websites that not only look exceptional but are also accessible to businesses of all sizes.</p>
+            </div>
+            <div class="content-block">
+                <h3 class="block-title">Our Approach</h3>
+                <p class="block-text">Speed doesn't mean sacrificing quality. By focusing on efficiency and eliminating unnecessary complexity, we create sophisticated websites in days, not months. Our streamlined process delivers premium results at a fraction of traditional agency costs.</p>
+            </div>
+        </div>
+
+        <div class="values-section">
+            <h3 class="values-title">Our Values</h3>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-number">01</div>
+                    <h4 class="value-title">Accessibility</h4>
+                    <p class="value-description">Quality web design should be within reach for everyone. We make professional websites affordable without compromising on quality.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-number">02</div>
+                    <h4 class="value-title">Efficiency</h4>
+                    <p class="value-description">We've streamlined the web development process to deliver exceptional results in days, not months.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-number">03</div>
+                    <h4 class="value-title">Quality</h4>
+                    <p class="value-description">Fast and affordable doesn't mean basic. Every website we create maintains the highest standards of design and functionality.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="team-section">
+            <h3 class="team-title">Our Team</h3>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="/api/placeholder/400/400" alt="Team Member" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <h4 class="member-name">John Doe</h4>
+                    <div class="member-role">Lead Developer</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="/api/placeholder/400/400" alt="Team Member" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <h4 class="member-name">Jane Smith</h4>
+                    <div class="member-role">Designer</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="/api/placeholder/400/400" alt="Team Member" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <h4 class="member-name">Mike Johnson</h4>
+                    <div class="member-role">Project Manager</div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <div id="footer-placeholder"></div>
+    <script src="/public/js/cursor.js"></script>
+<script src="/public/js/nav.js"></script>
+<script src="/public/js/footer.js"></script>
+</body>
+</html>

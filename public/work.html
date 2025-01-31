@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Stack Portfolio</title>
+    <link rel="stylesheet" href="/public/css/cursor.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/nav.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: white;
+            font-family: abc;
+            display: block;
+        }
+
+        .main-content {
+            display: flex;
+            align-items: center;
+            min-height: calc(100vh - 60px);
+            padding-top: 60px;
+        }
+
+        .stack-container {
+            position: relative;
+            width: 500px;
+            height: 400px;
+            margin-left: 20px;
+        }
+
+        .frame-wrapper {
+            position: absolute;
+            width: 100%;
+            height: 400px;
+            background: white;
+            border: 1px solid #000;
+            transition: all 0.5s ease;
+        }
+
+        .title-bar {
+            height: 30px;
+            background: white;
+            color: #333;
+            display: flex;
+            align-items: center;
+            padding: 0 5px;
+            font-size: 14px;
+            border-bottom: 1px solid #000;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .title-bar-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .visit-site-btn {
+            font-size: 12px;
+            padding: 2px 8px;
+            background: none;
+            border: 1px solid black;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: all 0.2s ease;
+            text-decoration: none;  /* Added this */
+            color: black;          /* Added this */
+        }
+
+        .visit-site-btn:hover {
+            background: black;
+            color: white;
+        }
+
+        .frame-content {
+            width: 100%;
+            height: calc(100% - 30px);
+            border: none;
+        }
+
+        #frame1 { bottom: 90px; clip-path: inset(0 0 340px 0); z-index: 1; }
+        #frame2 { bottom: 60px; clip-path: inset(0 0 340px 0); z-index: 2; }
+        #frame3 { bottom: 30px; clip-path: inset(0 0 340px 0); z-index: 3; }
+        #frame4 { bottom: 0; z-index: 4; }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 80px 16px 32px 16px;
+                min-height: auto;
+            }
+
+            .stack-container {
+                width: 100%;
+                height: auto;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .frame-wrapper {
+                position: relative;
+                width: 100%;
+                height: 300px;
+                bottom: auto;
+                clip-path: none;
+                transform: none !important;
+            }
+
+            .title-bar {
+                height: 40px;
+                padding: 0 12px;
+                font-size: 16px;
+            }
+
+            .visit-site-btn {
+                font-size: 14px;
+                padding: 4px 12px;
+            }
+
+            .frame-content {
+                height: calc(100% - 40px);
+            }
+
+            /* Reset all the stacking effects */
+            #frame1, #frame2, #frame3, #frame4 {
+                position: relative;
+                bottom: auto;
+                clip-path: none;
+                margin-bottom: 16px;
+            }
+
+            .close-button {
+                display: none;
+            }
+        }
+
+        @font-face {
+            font-family: abc;
+            src: url(/public/fonts/ABCDiatypeVariable-Trial.ttf);
+        }
+        @font-face {
+            font-family: abcmono;
+            src: url(/public/fonts/ABCDiatypeMonoVariable-Trial.ttf);
+        }
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    <div id="nav-placeholder"></div>
+
+    <div class="main-content">
+        <div class="stack-container">
+            <div class="frame-wrapper" id="frame4">
+                <div class="title-bar">
+                    <div class="title-bar-left">
+                        <div class="close-button"></div>
+                        Isobel Lola
+                    </div>
+                    <a href="https://www.isobellola.com/index.html" target="_blank" class="visit-site-btn">Visit Site</a>
+                </div>
+                <iframe class="frame-content" src="https://www.isobellola.com/index.html"></iframe>
+            </div>
+            <div class="frame-wrapper" id="frame3">
+                <div class="title-bar">
+                    <div class="title-bar-left">
+                        <div class="close-button"></div>
+                        Riley Schmedeman
+                    </div>
+                    <a href="https://www.rileygordonschmedeman.com" target="_blank" class="visit-site-btn">Visit Site</a>
+                </div>
+                <iframe class="frame-content" src="https://www.rileygordonschmedeman.com/"></iframe>
+            </div>
+            <div class="frame-wrapper" id="frame2">
+                <div class="title-bar">
+                    <div class="title-bar-left">
+                        <div class="close-button"></div>
+                        Superba Projects
+                    </div>
+                    <a href="https://superbaprojects.com" target="_blank" class="visit-site-btn">Visit Site</a>
+                </div>
+                <iframe class="frame-content" src="https://superbaprojects.com/"></iframe>
+            </div>
+            <div class="frame-wrapper" id="frame1">
+                <div class="title-bar">
+                    <div class="title-bar-left">
+                        <div class="close-button"></div>
+                        A Party
+                    </div>
+                    <a href="https://www.aparty.nyc" target="_blank" class="visit-site-btn">Visit Site</a>
+                </div>
+                <iframe class="frame-content" src="https://www.aparty.nyc/"></iframe>
+            </div>
+            <div class="frame-wrapper" id="frame2">
+                <div class="title-bar">
+                    <div class="title-bar-left">
+                        <div class="close-button"></div>
+                        Brody Gray
+                    </div>
+                    <a href="https://www.brodygray.com/" target="_blank" class="visit-site-btn">Visit Site</a>
+                </div>
+                <iframe class="frame-content" src="https://www.brodygray.com/"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/public/js/cursor.js"></script>
+<script src="/public/js/nav.js"></script>
+<script src="/public/js/footer.js"></script>
+    <script>
+        
+    </script>
+</body>
+</html>

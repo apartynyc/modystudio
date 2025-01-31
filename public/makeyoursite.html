@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Your Site</title>
+    <link rel="stylesheet" href="/public/css/cursor.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/nav.css">
+    <style>
+        @font-face {
+            font-family: abc;
+            src: url(ABCDiatypeVariable-Trial.ttf);
+        }
+        @font-face {
+            font-family: abcmono;
+            src: url(ABCDiatypeMonoVariable-Trial.ttf);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        body {
+            font-family: 'abc', sans-serif;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .form-section {
+            padding: 64px;
+            max-width: 800px;
+            margin: 0 auto;
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-header {
+            margin-bottom: 48px;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            font-weight: normal;
+            font-family: 'abc', sans-serif;
+        }
+
+        .form-description {
+            font-size: 1rem;
+            color: #666;
+            font-family: abcmono;
+            margin-bottom: 2rem;
+        }
+
+        .form-container {
+            border: 1px solid #000;
+            padding: 40px;
+            background: white;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-family: abcmono;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #000;
+            font-family: abcmono;
+            font-size: 1rem;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        .form-input::placeholder {
+            color: #999;
+        }
+
+        .optional-label {
+            color: #666;
+            font-size: 0.8rem;
+            margin-left: 8px;
+        }
+
+        .website-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .website-option {
+            border: 1px solid #000;
+            padding: 16px;
+            text-align: center;
+            cursor: none;
+            transition: all 0.3s ease;
+        }
+
+        .website-option.selected {
+            background: #000;
+            color: white;
+        }
+
+        .website-option-title {
+            font-family: abc;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .website-option-price {
+            font-family: abcmono;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+
+        .website-option-description {
+            font-family: abcmono;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        textarea.form-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            background: #000;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-family: abcmono;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            cursor: none;
+        }
+
+        .submit-button:hover {
+            background: #333;
+        }
+
+        @media (max-width: 768px) {
+            .form-section {
+               margin-top: 2rem;
+            }
+            .form-section {
+                padding: 32px;
+            }
+
+            .website-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-container {
+                padding: 24px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    <div id="nav-placeholder"></div>
+    <section class="form-section">
+        <div class="form-header">
+            <h2 class="form-title">Make Your Site</h2>
+            <p class="form-description">Tell us about your project and we'll help bring your vision to life.</p>
+        </div>
+
+        <form class="form-container" id="make-site-form">
+            <div class="website-options">
+                <div class="website-option" data-type="portfolio">
+                    <div class="website-option-title">Portfolio</div>
+                    <div class="website-option-price">$100</div>
+                    <div class="website-option-description">Perfect for personal branding</div>
+                </div>
+                <div class="website-option" data-type="business">
+                    <div class="website-option-title">Business</div>
+                    <div class="website-option-price">$400</div>
+                    <div class="website-option-description">Professional business presence</div>
+                </div>
+                <div class="website-option" data-type="enterprise">
+                    <div class="website-option-title">Enterprise</div>
+                    <div class="website-option-price">Custom</div>
+                    <div class="website-option-description">Full-featured solution</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" required placeholder="John Doe">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" required placeholder="john@example.com">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Company Name</label>
+                <input type="text" class="form-input" required placeholder="Company Inc.">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Phone Number <span class="optional-label">(Optional)</span></label>
+                <input type="tel" class="form-input" placeholder="+1 (555) 000-0000">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Project Description <span class="optional-label">(Optional)</span></label>
+                <textarea class="form-input" placeholder="Tell us about your vision for the website..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-button">Submit Request</button>
+        </form>
+    </section>
+    <div id="footer-placeholder"></div>
+    <script src="/public/js/cursor.js"></script>
+<script src="/public/js/nav.js"></script>
+<script src="/public/js/footer.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+   document.addEventListener('DOMContentLoaded', function() {
+    // Initialize EmailJS with your public key
+    emailjs.init("v1_GDGIWF8J-zspAG");
+
+    // Website option selection
+    const websiteOptions = document.querySelectorAll('.website-option');
+    let selectedType = null;
+    
+    websiteOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            websiteOptions.forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            option.classList.add('selected');
+            selectedType = option.getAttribute('data-type');
+        });
+    });
+
+    // Form submission
+    const form = document.getElementById('make-site-form');
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        if (!selectedType) {
+            alert('Please select a website type');
+            return;
+        }
+        
+        const submitButton = form.querySelector('.submit-button');
+        submitButton.style.transform = 'scale(0.95)';
+
+        // Prepare template parameters - using to_name and message to match default template
+        const templateParams = {
+            from_name: form.querySelector('input[placeholder="John Doe"]').value,
+            to_name: "Admin",
+            type: selectedType,
+            email: form.querySelector('input[placeholder="john@example.com"]').value,
+            company: form.querySelector('input[placeholder="Company Inc."]').value,
+            phone: form.querySelector('input[placeholder="+1 (555) 000-0000"]').value,
+            message: form.querySelector('textarea').value
+        };
+
+        try {
+            // Send email using EmailJS
+            await emailjs.send(
+                'service_pyx1laz', 
+                'template_k4e1skc', 
+                templateParams
+            );
+
+            // Show success message
+            submitButton.textContent = 'Request Sent!';
+            submitButton.style.background = 'black';
+            
+            // Reset form after 2 seconds
+            setTimeout(() => {
+                form.reset();
+                selectedType = null;
+                websiteOptions.forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                submitButton.textContent = 'Submit Request';
+                submitButton.style.background = '#000';
+                submitButton.style.transform = 'scale(1)';
+            }, 2000);
+
+        } catch (error) {
+            console.error('Error:', error);
+            submitButton.textContent = 'Error - Please try again';
+            submitButton.style.background = '#dc3545';
+        }
+    });
+});
+    </script>
+</body>
+</html>

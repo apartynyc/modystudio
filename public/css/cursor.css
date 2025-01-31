@@ -1,0 +1,18 @@
+#custom-cursor {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #000;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform-origin: center;
+    transition: all .4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#custom-cursor.hover {
+    width: 7px;
+    height: 7px;
+    border: none;
+    background-color: #0000ff;
+    transform: translate(5px, 5px);
+}

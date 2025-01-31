@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/public/css/cursor.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/nav.css">
+    <style>
+        @font-face {
+            font-family: abc;
+            src: url(/public/fonts/ABCDiatypeVariable-Trial.ttf);
+        }
+        @font-face {
+            font-family: abcmono;
+            src: url(/public/fonts/ABCDiatypeMonoVariable-Trial.ttf);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        body {
+            font-family: 'abc', sans-serif;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .login-section {
+            padding: 64px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .login-form {
+            border: 1px solid #000;
+            padding: 40px;
+            background: white;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-family: abcmono;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #000;
+            font-family: abcmono;
+            font-size: 1rem;
+        }
+
+        .login-button {
+            background: #000;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-family: abcmono;
+            font-size: 1rem;
+            width: 100%;
+            cursor: none;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 8px;
+            font-family: abcmono;
+            font-size: 0.9rem;
+        }
+        .register-link {
+    margin-top: 16px;
+    text-align: center;
+    font-family: abcmono;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.register-link a {
+    color: #000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+    color: #0000ff;
+}
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    <div id="nav-placeholder"></div>
+
+    <section class="login-section">
+        <form id="loginForm" class="login-form">
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" id="email" required>
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" id="password" required>
+                <div class="error-message" id="passwordError"></div>
+            </div>
+
+            <button type="submit" class="login-button">Login</button>
+            <div class="register-link">
+                Don't have an account? <a href="register.html">Register here</a>
+            </div>
+        </form>
+    </section>
+
+    <div id="footer-placeholder"></div>
+    <script src="/public/js/cursor.js"></script>
+<script src="/public/js/nav.js"></script>
+<script src="/public/js/footer.js"></script>
+
+    <script>
+         document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(elem => {
+                elem.textContent = '';
+            });
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const submitButton = document.querySelector('.login-button');
+            submitButton.textContent = 'Logging in...';
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    submitButton.textContent = 'Login Successful!';
+                    setTimeout(() => {
+                        window.location.href = '/homeplain.html'; // This redirects to your client page
+                    }, 1500);
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                submitButton.textContent = 'Login';
+                document.getElementById('emailError').textContent = error.message;
+            }
+        });
+    </script>
+</body>
+</html>
