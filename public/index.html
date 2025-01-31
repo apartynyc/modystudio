@@ -436,6 +436,7 @@ canvas {
 
 /* Media Queries */
 @media (max-width: 968px) {
+    /* Stats Section */
     .stats-section {
         min-height: auto;
         padding: 4rem 1rem;
@@ -456,6 +457,7 @@ canvas {
         font-size: 2.5rem;
     }
 
+    /* Pricing Section */
     .pricing-grid {
         display: none;
     }
@@ -464,21 +466,62 @@ canvas {
         display: block;
         position: relative;
         width: 100%;
-        padding: 0;
+        padding: 0 40px;
         overflow: hidden;
     }
 
     .carousel-slide {
         flex: 0 0 100%;
-        padding: 0;
+        padding: 0 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .carousel-container {
+        display: flex;
+        transition: transform 0.3s ease-in-out;
+        width: 100%;
     }
 
     .pricing-card {
         margin: 0 auto;
-        max-width: 90%;
-        min-height: 400px;
+        padding: 24px;
+        max-width: 100%;
+        min-height: auto;
+        height: auto;
     }
 
+    .carousel-button {
+        width: 30px;
+        height: 30px;
+        background: white;
+        z-index: 10;
+    }
+
+    .carousel-prev {
+        left: 5px;
+    }
+
+    .carousel-next {
+        right: 5px;
+    }
+
+    .carousel-indicators {
+        margin-top: 20px;
+        gap: 12px;
+    }
+
+    .carousel-dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    /* Remove underlines from carousel links */
+    .pricing-carousel a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    /* Sections Padding */
     .capabilities-section,
     .faq-section,
     .pricing-section {
@@ -489,6 +532,7 @@ canvas {
         margin-top: 40px;
     }
 
+    /* FAQ Section */
     .faq-container {
         max-width: 100%;
     }
@@ -877,7 +921,7 @@ canvas {
 <script src="/js/footer.js"></script>
     
     <script>
-        // Add this to your existing script section
+        // Carousel functionality
 class PricingCarousel {
     constructor() {
         this.currentSlide = 0;
@@ -885,6 +929,20 @@ class PricingCarousel {
         this.dots = document.querySelectorAll('.carousel-dot');
         this.prevButton = document.querySelector('.carousel-prev');
         this.nextButton = document.querySelector('.carousel-next');
+        
+        // Add touch support
+        this.touchStartX = 0;
+        this.touchEndX = 0;
+        const container = document.querySelector('.carousel-container');
+        
+        container.addEventListener('touchstart', (e) => {
+            this.touchStartX = e.changedTouches[0].screenX;
+        });
+
+        container.addEventListener('touchend', (e) => {
+            this.touchEndX = e.changedTouches[0].screenX;
+            this.handleSwipe();
+        });
         
         this.init();
     }
@@ -899,6 +957,21 @@ class PricingCarousel {
         this.dots.forEach((dot, index) => {
             dot.addEventListener('click', () => this.goToSlide(index));
         });
+    }
+
+    handleSwipe() {
+        const swipeThreshold = 50; // minimum distance for a swipe
+        const diff = this.touchStartX - this.touchEndX;
+
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Swipe left, go to next slide
+                this.next();
+            } else {
+                // Swipe right, go to previous slide
+                this.prev();
+            }
+        }
     }
 
     updateSlides() {
@@ -931,95 +1004,97 @@ class PricingCarousel {
     }
 }
 
-// Initialize carousel
-document.addEventListener('DOMContentLoaded', () => {
+// FAQ functionality
+document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', () => {
+        const item = question.parentNode;
+        const isActive = item.classList.contains('active');
+        
+        // Close all FAQ items
+        document.querySelectorAll('.faq-item').forEach(faqItem => {
+            faqItem.classList.remove('active');
+        });
+        
+        // If the clicked item wasn't active, open it
+        if (!isActive) {
+            item.classList.add('active');
+        }
+    });
+});
+
+// Stats Counter Animation
+function generateRandomNumber(length) {
+    return String(Math.floor(Math.random() * Math.pow(10, length))).padStart(length, '0');
+}
+
+function animateCounter(element, finalNumber, duration = 1000) {
+    const steps = 20;
+    const increment = duration / steps;
+    let currentStep = 0;
+    const finalLength = String(finalNumber).length;
+
+    const interval = setInterval(() => {
+        currentStep++;
+        if (currentStep === steps) {
+            element.textContent = String(finalNumber).padStart(finalLength, '0');
+            clearInterval(interval);
+        } else {
+            element.textContent = generateRandomNumber(finalLength);
+        }
+    }, increment);
+}
+
+function updateTime() {
+    const timeElement = document.getElementById('current-time');
+    const now = new Date();
+    const options = {
+        timeZone: 'America/New_York',
+        hour12: true,
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+    };
+    timeElement.textContent = now.toLocaleTimeString('en-US', options);
+}
+
+// Intersection Observer for animation trigger
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            // Start counter animations
+            animateCounter(document.getElementById('websites-count'), 5);
+            animateCounter(document.getElementById('clients-count'), 5);
+            observer.disconnect();
+        }
+    });
+}, { threshold: 0.1 });
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize carousel for mobile
     if (window.innerWidth <= 968) {
         new PricingCarousel();
     }
+
+    // Start observing stats section
+    observer.observe(document.querySelector('.stats-section'));
+
+    // Initialize time update
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // Footer functionality
+    const bottomContainer = document.querySelector('.bottom-container');
+    const arrowContainer = document.querySelector('.arrow-container');
+
+    if (bottomContainer && arrowContainer) {
+        bottomContainer.style.display = 'block';
+        arrowContainer.addEventListener('click', function() {
+            bottomContainer.classList.toggle('visible');
+            this.classList.toggle('up');
+        });
+    }
 });
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const item = question.parentNode;
-                const isActive = item.classList.contains('active');
-                
-                // Close all FAQ items
-                document.querySelectorAll('.faq-item').forEach(faqItem => {
-                    faqItem.classList.remove('active');
-                });
-                
-                // If the clicked item wasn't active, open it
-                if (!isActive) {
-                    item.classList.add('active');
-                }
-            });
-        });
-        // Stats Counter Animation
-        function generateRandomNumber(length) {
-            return String(Math.floor(Math.random() * Math.pow(10, length))).padStart(length, '0');
-        }
-
-        function animateCounter(element, finalNumber, duration = 1000) {
-            const steps = 20;
-            const increment = duration / steps;
-            let currentStep = 0;
-            const finalLength = String(finalNumber).length;
-
-            const interval = setInterval(() => {
-                currentStep++;
-                if (currentStep === steps) {
-                    element.textContent = String(finalNumber).padStart(finalLength, '0');
-                    clearInterval(interval);
-                } else {
-                    element.textContent = generateRandomNumber(finalLength);
-                }
-            }, increment);
-        }
-
-        function updateTime() {
-            const timeElement = document.getElementById('current-time');
-            const now = new Date();
-            const options = {
-                timeZone: 'America/New_York',
-                hour12: true,
-                hour: 'numeric',
-                minute: 'numeric',
-                second: 'numeric'
-            };
-            timeElement.textContent = now.toLocaleTimeString('en-US', options);
-        }
-
-        // Intersection Observer for animation trigger
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Start counter animations
-                    animateCounter(document.getElementById('websites-count'), 5);
-                    animateCounter(document.getElementById('clients-count'), 5);
-                    observer.disconnect();
-                }
-            });
-        }, { threshold: 0.1 });
-
-        // Observe the stats section
-        observer.observe(document.querySelector('.stats-section'));
-
-        // Update time every second
-        setInterval(updateTime, 1000);
-        updateTime(); // Initial time update
-
-        // Footer JS
-        document.addEventListener('DOMContentLoaded', function() {
-            const bottomContainer = document.querySelector('.bottom-container');
-            const arrowContainer = document.querySelector('.arrow-container');
-
-            if (bottomContainer && arrowContainer) {
-                bottomContainer.style.display = 'block';
-                arrowContainer.addEventListener('click', function() {
-                    bottomContainer.classList.toggle('visible');
-                    this.classList.toggle('up');
-                });
-            }
-        });
     </script>
 </body>
 </html>
