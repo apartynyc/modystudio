@@ -5,6 +5,7 @@
     box-sizing: border-box;
     font-weight: normal;
     font-family: abc;
+    cursor: none;
 }
 
 body {
