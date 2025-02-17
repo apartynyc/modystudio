@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Stack Portfolio</title>
-    <link rel="stylesheet" href="/css/nav.css">
-    <link rel="stylesheet" href="/css/footer.css">
-    <link rel="stylesheet" href="/css/cursor.css">
+    <link rel="stylesheet" href="/public/css/nav.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/cursor.css">
     <style>
         body {
             margin: 0;
@@ -18,128 +18,116 @@
             cursor: none;
         }
 
-        .main-content {
-            display: flex;
-            align-items: center;
-            min-height: calc(100vh - 60px);
-            padding-top: 60px;
-        }
+       /* Projects Section */
+.projects-section {
+    padding: 64px;
+    background: white;
+    font-family: abcmono;
+    
+}
 
-        .stack-container {
-            position: relative;
-            width: 500px;
-            height: 400px;
-            margin-left: 20px;
-        }
+.project-item {
+    margin-bottom: 120px;
+    position: relative;
+    max-width: 500px;
+}
 
-        .frame-wrapper {
-            position: absolute;
-            width: 100%;
-            height: 400px;
-            background: white;
-            border: 1px solid #000;
-            transition: all 0.5s ease;
-        }
+.project-item.reverse {
+    margin-left: auto;
+}
 
-        .title-bar {
-            height: 30px;
-            background: white;
-            color: #333;
-            display: flex;
-            align-items: center;
-            padding: 0 5px;
-            font-size: 14px;
-            border-bottom: 1px solid #000;
-            justify-content: space-between;
-            
-        }
+.project-image {
+    position: relative;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease;
+}
 
-        .title-bar-left {
-            display: flex;
-            align-items: center;
-        }
+.project-item.visible .project-image {
+    opacity: 1;
+    transform: translateY(0);
+}
 
-        .visit-site-btn {
-            font-size: 12px;
-            padding: 2px 8px;
-            background: none;
-            border: 1px solid black;
-           
-            margin-right: 5px;
-            transition: all 0.2s ease;
-            text-decoration: none;  /* Added this */
-            color: black;          /* Added this */
-        }
 
-        .visit-site-btn:hover {
-            background: black;
-            color: white;
-        }
+.project-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    padding: 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 
-        .frame-content {
-            width: 100%;
-            height: calc(100% - 30px);
-            border: none;
-        }
 
-        #frame1 { bottom: 90px; clip-path: inset(0 0 340px 0); z-index: 1; }
-        #frame2 { bottom: 60px; clip-path: inset(0 0 340px 0); z-index: 2; }
-        #frame3 { bottom: 30px; clip-path: inset(0 0 340px 0); z-index: 3; }
-        #frame4 { bottom: 0; z-index: 4; }
+.project-text {
+    position: absolute;
+    top: 5px;
+    background: white;
+    font-family: abcmono;
+    font-size: 0.75rem;
+    padding: 8px;
+    
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
 
-        /* Mobile Styles */
-        @media (max-width: 768px) {
-            .main-content {
-                padding: 80px 16px 32px 16px;
-                min-height: auto;
-            }
+/* Position text on the right for default items */
+.project-item .project-text {
+    left: calc(100% + 20px);
+}
 
-            .stack-container {
-                width: 100%;
-                height: auto;
-                margin: 0;
-                display: flex;
-                flex-direction: column;
-                gap: 16px;
-            }
+/* Position text on the left for reverse items */
+.project-item.reverse .project-text {
+    right: calc(100% + 20px);
+    left: auto;
+}
 
-            .frame-wrapper {
-                position: relative;
-                width: 100%;
-                height: 300px;
-                bottom: auto;
-                clip-path: none;
-                transform: none !important;
-            }
+.typing-text {
+    position: relative;
+    min-height: 1em;
+}
 
-            .title-bar {
-                height: 40px;
-                padding: 0 12px;
-                font-size: 16px;
-            }
+.typing-text.name {
+    font-size: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
 
-            .visit-site-btn {
-                font-size: 14px;
-                padding: 4px 12px;
-            }
+.project-item.visible .typing-text.name.visible {
+    opacity: 1;
+}
 
-            .frame-content {
-                height: calc(100% - 40px);
-            }
+.details-container {
+    display: flex;
+    gap: 12px;
+    font-size: 0.7rem;
+    color: #666;
+}
 
-            /* Reset all the stacking effects */
-            #frame1, #frame2, #frame3, #frame4 {
-                position: relative;
-                bottom: auto;
-                clip-path: none;
-                margin-bottom: 16px;
-            }
+.typing-text.category,
+.typing-text.number {
+    opacity: 0;
+}
 
-            .close-button {
-                display: none;
-            }
-        }
+.typing-text.category.visible,
+.typing-text.number.visible {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
 
+@media (max-width: 968px) {
+    .project-item .project-text,
+    .project-item.reverse .project-text {
+        left: auto;
+        right: 20px;
+    }
+    
+    .projects-section {
+        padding: 32px;
+    }
+}
         @font-face {
             font-family: abc;
             src: url(/public/fonts/ABCDiatypeVariable-Trial.ttf);
@@ -154,68 +142,145 @@
     <div id="custom-cursor"></div>
     <div id="nav-placeholder"></div>
 
-    <div class="main-content">
-        <div class="stack-container">
-            <div class="frame-wrapper" id="frame4">
-                <div class="title-bar">
-                    <div class="title-bar-left">
-                        <div class="close-button"></div>
-                        Isobel Lola
-                    </div>
-                    <a href="https://www.isobellola.com/index.html" target="_blank" class="visit-site-btn">Visit Site</a>
-                </div>
-                <iframe class="frame-content" src="https://www.isobellola.com/index.html"></iframe>
-            </div>
-            <div class="frame-wrapper" id="frame3">
-                <div class="title-bar">
-                    <div class="title-bar-left">
-                        <div class="close-button"></div>
-                        Riley Schmedeman
-                    </div>
-                    <a href="https://www.rileygordonschmedeman.com" target="_blank" class="visit-site-btn">Visit Site</a>
-                </div>
-                <iframe class="frame-content" src="https://www.rileygordonschmedeman.com/"></iframe>
-            </div>
-            <div class="frame-wrapper" id="frame2">
-                <div class="title-bar">
-                    <div class="title-bar-left">
-                        <div class="close-button"></div>
-                        Superba Projects
-                    </div>
-                    <a href="https://superbaprojects.com" target="_blank" class="visit-site-btn">Visit Site</a>
-                </div>
-                <iframe class="frame-content" src="https://superbaprojects.com/"></iframe>
-            </div>
-            <div class="frame-wrapper" id="frame1">
-                <div class="title-bar">
-                    <div class="title-bar-left">
-                        <div class="close-button"></div>
-                        A Party
-                    </div>
-                    <a href="https://www.aparty.nyc" target="_blank" class="visit-site-btn">Visit Site</a>
-                </div>
-                <iframe class="frame-content" src="https://www.aparty.nyc/"></iframe>
-            </div>
-            <div class="frame-wrapper" id="frame2">
-                <div class="title-bar">
-                    <div class="title-bar-left">
-                        <div class="close-button"></div>
-                        Brody
-                    </div>
-                    <a href="https://www.brodygray.com/" target="_blank" class="visit-site-btn">Visit Site</a>
-                </div>
-                <iframe class="frame-content" src="https://www.brodygray.com/"></iframe>
+   <!-- Projects Section -->
+<section class="projects-section">
+    <div class="project-item">
+        <div class="project-image">
+            <img src="superba.png" alt="Project 1" />
+        </div>
+        <div class="project-text">
+            <div class="typing-text name" data-text="Superba Projects"></div>
+            <div class="details-container">
+                <div class="typing-text category" data-text="Business"></div>
+                <div class="typing-text number" data-text="01"></div>
             </div>
         </div>
     </div>
 
+    <div class="project-item reverse">
+        <div class="project-image">
+            <img src="apaimg.png" alt="Project 2" />
+        </div>
+        <div class="project-text">
+            <div class="typing-text name" data-text="A Party"></div>
+            <div class="details-container">
+                <div class="typing-text category" data-text="BUSINESS"></div>
+                <div class="typing-text number" data-text="02"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-item">
+        <div class="project-image">
+            <img src="isoimg.png" alt="Project 3" />
+        </div>
+        <div class="project-text">
+            <div class="typing-text name" data-text="Isobel Lola"></div>
+            <div class="details-container">
+                <div class="typing-text category" data-text="PORTFOLIO"></div>
+                <div class="typing-text number" data-text="03"></div>
+            </div>
+        </div>
+    </div>
+    <div class="project-item">
+        <div class="project-image">
+            <img src="brodyimg.png" alt="Project 3" />
+        </div>
+        <div class="project-text">
+            <div class="typing-text name" data-text="Brody Gray"></div>
+            <div class="details-container">
+                <div class="typing-text category" data-text="PORTFOLIO"></div>
+                <div class="typing-text number" data-text="03"></div>
+            </div>
+        </div>
+    </div>
+    <div class="project-item reverse">
+        <div class="project-image">
+            <img src="apaimg.png" alt="Project 2" />
+        </div>
+        <div class="project-text">
+            <div class="typing-text name" data-text="A Party"></div>
+            <div class="details-container">
+                <div class="typing-text category" data-text="BUSINESS"></div>
+                <div class="typing-text number" data-text="02"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
     <div id="footer-placeholder"></div>
 
-    <script src="/js/cursor.js"></script>
-<script src="/js/nav.js"></script>
-<script src="/js/footer.js"></script>
+    <script src="/public/js/cursor.js"></script>
+<script src="/public/js/nav.js"></script>
+<script src="/public/js/footer.js"></script>
     <script>
-        
+       function typeText(element, text, callback) {
+    let index = 0;
+    element.textContent = '';
+    element.style.opacity = '1';
+    
+    function typeChar() {
+        if (index < text.length) {
+            element.textContent = text.slice(0, index + 1);
+            index++;
+            setTimeout(typeChar, 50);
+        } else {
+            if (callback) callback();
+        }
+    }
+    
+    typeChar();
+}
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const projectItem = entry.target;
+            const name = projectItem.querySelector('.typing-text.name');
+            const category = projectItem.querySelector('.typing-text.category');
+            const number = projectItem.querySelector('.typing-text.number');
+            
+            // Reset all text
+            if (name) name.textContent = '';
+            if (category) category.textContent = '';
+            if (number) number.textContent = '';
+            
+            // Add visible class to start image fade
+            projectItem.classList.add('visible');
+            
+            // Fade in the name
+            setTimeout(() => {
+                if (name) {
+                    name.textContent = name.dataset.text;
+                    name.classList.add('visible');
+                }
+            }, 700);
+            
+            // Start typing category and number
+            setTimeout(() => {
+                if (category) {
+                    typeText(category, category.dataset.text, () => {
+                        category.classList.add('visible');
+                        if (number) {
+                            setTimeout(() => {
+                                typeText(number, number.dataset.text, () => {
+                                    number.classList.add('visible');
+                                });
+                            }, 200);
+                        }
+                    });
+                }
+            }, 1200);
+        }
+    });
+}, {
+    threshold: 0.2
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const projectItems = document.querySelectorAll('.project-item');
+    projectItems.forEach(item => observer.observe(item));
+}); 
     </script>
 </body>
 </html>
