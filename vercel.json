@@ -3,6 +3,10 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|ttf|woff|woff2))",
+      "destination": "/$1"
+    },
+    {
       "source": "/(.*)",
       "destination": "/$1.html"
     }
