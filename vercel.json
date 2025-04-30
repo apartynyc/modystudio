@@ -1,4 +1,15 @@
 {
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "x-vercel-rewrite",
+          "value": "/$1.html"
+        }
+      ]
+    }
+  ],
   "routes": [
     {
       "src": "/js/(.*)",
@@ -19,10 +30,6 @@
     {
       "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|ttf|woff|woff2))",
       "dest": "/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1.html"
     }
   ]
 } 
