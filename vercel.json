@@ -1,14 +1,28 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "rewrites": [
+  "routes": [
     {
-      "source": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|ttf|woff|woff2))",
-      "destination": "/$1"
+      "src": "/js/(.*)",
+      "dest": "/js/$1"
     },
     {
-      "source": "/(.*)",
-      "destination": "/$1.html"
+      "src": "/css/(.*)",
+      "dest": "/css/$1"
+    },
+    {
+      "src": "/fonts/(.*)",
+      "dest": "/fonts/$1"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|ttf|woff|woff2))",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1.html"
     }
   ]
 } 
