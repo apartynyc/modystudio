@@ -1,5 +1,4 @@
 {
-  // Updated configuration for deployment
   "cleanUrls": true,
   "headers": [
     {
